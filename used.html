@@ -3,188 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MRZ BOTS</title>
+    <title>Mangandi API Installation Guide</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://envs.sh/wo-.jpg');
+            background-size: cover;
+            color: #fff;
             margin: 0;
             padding: 0;
-            background: url('https://envs.sh/woO.jpg') no-repeat center center fixed;
-            background-size: cover;
-            font-family: Arial, sans-serif;
         }
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-            color: white;
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
         }
         h1 {
-            font-size: 4em;
-            font-weight: bold;
+            text-align: center;
+            color: #f39c12;
+        }
+        .section {
             margin-bottom: 20px;
         }
-        .icons {
-            margin-top: 20px;
-        }
-        .icons a {
-            margin: 0 15px;
-        }
-        .icons img {
-            width: 40px;
-            height: 40px;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: -250px; /* Hide sidebar off-screen initially */
-            width: 250px;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            transition: left 0.3s ease;
-            padding: 20px;
-            color: white;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-            z-index: 10;
-        }
-        .sidebar.show {
-            left: 0; /* Slide in sidebar */
-        }
-        .menu-btn {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            z-index: 15;
-        }
-        .menu-btn div {
-            width: 30px;
-            height: 3px;
-            background-color: white;
-            margin: 5px 0;
-            transition: transform 0.3s;
-        }
-        .menu-btn.open div:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 6px);
-        }
-        .menu-btn.open div:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-btn.open div:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -6px);
-        }
-        .sidebar a {
-            display: block;
-            margin: 10px 0;
-            color: white;
-            text-decoration: none;
-            font-size: 1.2em;
-            font-weight: bold;
-            transition: opacity 0.3s;
-        }
-        .sidebar a:hover {
-            opacity: 0.8;
-        }
-        .button {
-            position: relative;
-            display: block;
-            padding: 15px 30px;
-            margin: 10px 0;
-            color: white;
-            text-decoration: none;
+        .code-block {
+            background: #333;
+            padding: 15px;
             border-radius: 5px;
-            background: linear-gradient(45deg, #FFD700, #FF4500);
-            font-weight: bold;
-            font-size: 1.2em;
-            transition: opacity 0.3s;
+            position: relative;
             overflow: hidden;
         }
-        .button:hover {
-            opacity: 0.8;
+        .code {
+            color: #2ecc71;
+            font-family: monospace;
+            font-size: 16px;
         }
-        .button::before, .button::after {
-            content: "";
+        .copy-button {
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            height: 5px;
-            width: 50%;
-            background: #fff;
-            transition: transform 0.3s;
-        }
-        .button::before {
+            right: 10px;
             top: 10px;
-            background: #FF4500;
+            background: #e67e22;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        .button::after {
-            bottom: 10px;
-            background: #FFD700;
+        .copy-button:hover {
+            background: #d35400;
         }
-        .button .middle-line {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 5px;
-            width: 50%;
-            background: #fff;
-        }
-        .backdrop {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 5;
-        }
-        .backdrop.show {
-            display: block;
+        .explanation {
+            margin-top: 10px;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>MRZ BOTS</h1>
-        <div class="icons">
-            <a href="https://youtube.com/@mrzbots?si=d6AYV6rDzCRMv9Hk" target="_blank"><img src="https://img.icons8.com/ios-filled/50/000000/youtube.png" alt="YouTube"></a>
-            <a href="https://t.me/Mrz_bots" target="_blank"><img src="https://img.icons8.com/ios-filled/50/000000/telegram.png" alt="Telegram"></a>
-            <a href="https://github.com/Mrzbots" target="_blank"><img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub"></a>
+        <h1>Mangandi API Installation Guide</h1>
+
+        <div class="section">
+            <h2>Step 1: Install Mangandi API</h2>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode('pip install Mangandi')">Copy</button>
+                <pre class="code">pip install Mangandi</pre>
+            </div>
+            <p class="explanation">
+                Add the above command to your terminal to install the Mangandi API. Ensure you have Python and pip installed on your system. This will install the Mangandi package required for your project.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Step 2: Add to Your Repository</h2>
+            <div class="code-block">
+                <button class="copy-button" onclick="copyCode('Mangandi')">Copy</button>
+                <pre class="code">Mangandi</pre>
+            </div>
+            <p class="explanation">
+                Add the above line to your `requirements.txt` file to ensure that the Mangandi API is included when you deploy or share your project. This will allow others to install the required package easily.
+            </p>
         </div>
     </div>
-    <div class="sidebar">
-        <a href="used.html" class="button">Mangandi Docs</a>
-        <a href="mrz.html" class="button">MRZ BOTS Details</a>
-        <a href="#" onclick="closeMenu()">Close</a>
-    </div>
-    <div class="menu-btn" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-    <div class="backdrop" onclick="closeMenu()"></div>
-    <script>
-        function toggleMenu() {
-            const sidebar = document.querySelector('.sidebar');
-            const backdrop = document.querySelector('.backdrop');
-            const menuBtn = document.querySelector('.menu-btn');
-            sidebar.classList.toggle('show');
-            backdrop.classList.toggle('show');
-            menuBtn.classList.toggle('open');
-        }
 
-        function closeMenu() {
-            const sidebar = document.querySelector('.sidebar');
-            const backdrop = document.querySelector('.backdrop');
-            const menuBtn = document.querySelector('.menu-btn');
-            sidebar.classList.remove('show');
-            backdrop.classList.remove('show');
-            menuBtn.classList.remove('open');
+    <script>
+        function copyCode(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Code copied to clipboard!');
+            }, function() {
+                alert('Failed to copy code.');
+            });
         }
     </script>
 </body>
