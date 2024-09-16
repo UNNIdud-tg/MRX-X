@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: url('https://envs.sh/woO.jpg') no-repeat center center fixed;
+    background-size: cover;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.icons a {
+    margin: 0 15px;
+}
+
+.icons img {
+    width: 40px;
+    height: 40px;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    transition: left 0.3s ease;
+    padding: 20px;
+    z-index: 1050;
+}
+
+.sidebar.show {
+    left: 0;
+}
+
+.menu-btn {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.menu-btn div {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.menu-btn.open div:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+
+.menu-btn.open div:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.open div:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
+}
+
+.sidebar a {
+    display: block;
+    margin: 10px 0;
+    color: white;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: opacity 0.3s;
+}
+
+.sidebar a:hover {
+    opacity: 0.8;
+}
+
+.backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+.backdrop.show {
+    display: block;
+}
