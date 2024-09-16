@@ -1,3 +1,4 @@
+/* General styles */
 * {
     margin: 0;
     padding: 0;
@@ -14,6 +15,7 @@ body, html {
     height: 100%;
 }
 
+/* Background image */
 .background-image img {
     position: absolute;
     width: 100%;
@@ -22,6 +24,7 @@ body, html {
     z-index: -1;
 }
 
+/* Content layout */
 .content {
     display: flex;
     flex-direction: column;
@@ -30,20 +33,46 @@ body, html {
     height: 100%;
 }
 
-.profile-image img {
+/* Profile image with stroke animation */
+.profile-image {
+    position: relative;
     width: 150px;
     height: 150px;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     border: 5px solid white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.profile-stroke {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    background-image: linear-gradient(45deg, red, yellow, green, blue);
+    animation: rotate-border 3s infinite linear;
+}
+
+@keyframes rotate-border {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Text section */
 .text {
     margin-top: 20px;
     font-size: 24px;
     color: white;
 }
 
+/* Button styles */
 .button {
     margin-top: 20px;
     position: relative;
@@ -70,9 +99,47 @@ body, html {
     animation: rotate-border 1s infinite linear;
 }
 
-@keyframes rotate-border {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+    .profile-image {
+        width: 100px;
+        height: 100px;
+    }
+
+    .profile-stroke {
+        width: 110px;
+        height: 110px;
+    }
+
+    .text {
+        font-size: 18px;
+    }
+
+    .button a {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .profile-image {
+        width: 200px;
+        height: 200px;
+    }
+
+    .profile-stroke {
+        width: 210px;
+        height: 210px;
+    }
+
+    .text {
+        font-size: 28px;
+    }
+
+    .button a {
+        padding: 12px 24px;
+        font-size: 18px;
+    }
 }
 
 /* Hidden file linking */
