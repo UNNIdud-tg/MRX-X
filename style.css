@@ -33,7 +33,7 @@ body, html {
     height: 100%;
 }
 
-/* Profile image with stroke animation */
+/* Profile image with animated frame */
 .profile-image {
     position: relative;
     width: 150px;
@@ -46,18 +46,23 @@ body, html {
     border-radius: 50%;
     border: 5px solid white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 1;
 }
 
-.profile-stroke {
+.profile-frame {
     position: absolute;
-    top: -5px;
-    left: -5px;
-    width: 160px;
-    height: 160px;
+    top: -10px;
+    left: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
     border-radius: 50%;
-    border: 3px solid transparent;
+    border: 5px solid transparent;
     background-image: linear-gradient(45deg, red, yellow, green, blue);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
     animation: rotate-border 3s infinite linear;
+    z-index: 0;
 }
 
 @keyframes rotate-border {
@@ -106,9 +111,9 @@ body, html {
         height: 100px;
     }
 
-    .profile-stroke {
-        width: 110px;
-        height: 110px;
+    .profile-frame {
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
     }
 
     .text {
@@ -127,9 +132,9 @@ body, html {
         height: 200px;
     }
 
-    .profile-stroke {
-        width: 210px;
-        height: 210px;
+    .profile-frame {
+        width: calc(100% + 20px);
+        height: calc(100% + 20px);
     }
 
     .text {
