@@ -7,7 +7,171 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Loading animation */
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://envs.sh/woO.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .icons {
+            margin-top: 20px;
+        }
+
+        .icons a {
+            margin: 0 15px;
+        }
+
+        .icons img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Hide sidebar off-screen initially */
+            width: 250px;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            transition: left 0.3s ease;
+            padding: 20px;
+            color: white;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .sidebar.show {
+            left: 0; /* Slide in sidebar */
+        }
+
+        .menu-btn {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 15;
+        }
+
+        .menu-btn div {
+            width: 30px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: transform 0.3s;
+        }
+
+        .menu-btn.open div:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+
+        .menu-btn.open div:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-btn.open div:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
+        }
+
+        .sidebar a {
+            display: block;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .sidebar a:hover {
+            opacity: 0.8;
+        }
+
+        .button {
+            position: relative;
+            display: block;
+            padding: 15px 30px;
+            margin: 10px 0;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            background: linear-gradient(45deg, #FFD700, #FF4500);
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: opacity 0.3s;
+            overflow: hidden;
+        }
+
+        .button:hover {
+            opacity: 0.8;
+        }
+
+        .button::before, .button::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 5px;
+            width: 50%;
+            background: #fff;
+            transition: transform 0.3s;
+        }
+
+        .button::before {
+            top: 10px;
+            background: #FF4500;
+        }
+
+        .button::after {
+            bottom: 10px;
+            background: #FFD700;
+        }
+
+        .button .middle-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            height: 5px;
+            width: 50%;
+            background: #fff;
+        }
+
+        .backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+        }
+
+        .backdrop.show {
+            display: block;
+        }
+
+        /* New styles for the loading and resizing feature */
         .loading {
             display: none;
             font-size: 2rem;
@@ -15,7 +179,6 @@
             margin-top: 20px;
         }
 
-        /* Image grid */
         .image-grid {
             display: none;
             grid-template-columns: repeat(3, 100px);
@@ -37,9 +200,10 @@
     </style>
 </head>
 <body>
-    <div class="container text-center d-flex flex-column justify-content-center align-items-center vh-100 text-white">
+    <!-- Existing container content -->
+    <div class="container">
         <h1>MRZ BOTS</h1>
-        <div class="icons my-4">
+        <div class="icons">
             <a href="https://youtube.com/@mrzbots?si=d6AYV6rDzCRMv9Hk" target="_blank">
                 <img src="https://img.icons8.com/ios-filled/50/000000/youtube.png" alt="YouTube">
             </a>
@@ -50,6 +214,24 @@
                 <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub">
             </a>
         </div>
+    </div>
+
+    <div class="sidebar">
+        <a href="used.html" class="button">Mangandi Docs</a>
+        <a href="mrz.html" class="button">MRZ BOTS Details</a>
+        <a href="#" onclick="closeMenu()">Close</a>
+    </div>
+
+    <div class="menu-btn" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="backdrop" onclick="closeMenu()"></div>
+
+    <!-- New feature content -->
+    <div class="container text-center d-flex flex-column justify-content-center align-items-center vh-100 text-white">
         <!-- Button to trigger image change -->
         <button id="resizeBtn" class="btn btn-primary">Click to Resize Image</button>
 
@@ -77,42 +259,56 @@
     <script src="script.js"></script>
 
     <script>
-        const resizeBtn = document.getElementById('resizeBtn');
-        const loadingText = document.getElementById('loadingText');
-        const imageGrid = document.getElementById('imageGrid');
-        const resizedImage = document.getElementById('resizedImage');
-        const imagePieces = document.querySelectorAll('.image-piece');
+        // Old functionality - Menu toggle
+        function toggleMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            const backdrop = document.querySelector('.backdrop');
+            const menuBtn = document.querySelector('.menu-btn');
+            
+            sidebar.classList.toggle('show');
+            backdrop.classList.toggle('show');
+            menuBtn.classList.toggle('open');
+        }
 
-        resizeBtn.addEventListener('click', () => {
-            // Show the loading text
+        function closeMenu() {
+            const sidebar = document.querySelector('.sidebar');
+            const backdrop = document.querySelector('.backdrop');
+            const menuBtn = document.querySelector('.menu-btn');
+            
+            sidebar.classList.remove('show');
+            backdrop.classList.remove('show');
+            menuBtn.classList.remove('open');
+        }
+
+        // New functionality - Button click, image resize, and puzzle effect
+        document.getElementById('resizeBtn').addEventListener('click', function() {
+            const loadingText = document.getElementById('loadingText');
+            const resizedImage = document.getElementById('resizedImage');
+            const imageGrid = document.getElementById('imageGrid');
+            const pieces = document.querySelectorAll('.image-piece');
+
+            // Show loading text
             loadingText.style.display = 'block';
-            resizedImage.style.display = 'none';
-            imageGrid.style.display = 'none';
 
-            // Simulate a delay of 5 seconds before resizing
-            setTimeout(() => {
-                // Hide loading text
+            // After 5 seconds, hide loading text and display the small image
+            setTimeout(function() {
                 loadingText.style.display = 'none';
+                resizedImage.style.display = 'block';
+                resizedImage.classList.add('small-image');
 
-                // Show the image grid
-                imageGrid.style.display = 'grid';
-
-                // Rotate pieces randomly
-                imagePieces.forEach(piece => {
-                    const randomRotation = Math.floor(Math.random() * 360);
-                    piece.style.transform = `rotate(${randomRotation}deg)`;
-                });
-
-                // After 3 seconds, rotate them back to correct the image and display the final resized image
-                setTimeout(() => {
-                    imagePieces.forEach(piece => {
-                        piece.style.transform = 'rotate(0deg)';
-                    });
-                    imageGrid.style.display = 'none';
-                    resizedImage.style.display = 'block';
-                }, 3000);
-
+                // Hide image pieces grid
+                imageGrid.style.display = 'none';
             }, 5000);
+
+            // Display the image as separate puzzle pieces
+            imageGrid.style.display = 'grid';
+
+            // Rotate the puzzle pieces
+            pieces.forEach(function(piece, index) {
+                setTimeout(function() {
+                    piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+                }, index * 500);
+            });
         });
     </script>
 </body>
