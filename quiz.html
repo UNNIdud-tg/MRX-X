@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Programming Trivia Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url('https://envs.sh/wXo.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #fff;
+            font-size: 2.5em;
+        }
+        .question {
+            font-size: 1.4em;
+            margin: 20px 0;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+        .option-button {
+            background-image: linear-gradient(45deg, #f39c12, #8e44ad, #3498db);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin: 10px 0;
+            padding: 15px;
+            transition: background-color 0.3s;
+        }
+        .option-button:hover {
+            background-image: linear-gradient(45deg, #e74c3c, #2ecc71, #9b59b6);
+        }
+        .next-button {
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        .timer {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+        .correct-animation, .incorrect-animation {
+            font-size: 1.5em;
+            margin-top: 20px;
+            display: none;
+        }
+        .correct-animation {
+            color: limegreen;
+        }
+        .incorrect-animation {
+            color: red;
+        }
+        .score {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5em;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="score">Score: <span id="score">0</span></div>
+    <div class="container">
+        <h1>Programming Quiz</h1>
+        <p id="question" class="question">Loading question...</p>
+        <div id="options" class="options"></div>
+        <p id="timer" class="timer">Time: 20</p>
+        <div id="animation" class="correct-animation">Correct!</div>
+        <div id="wrong-animation" class="incorrect-animation">Incorrect!</div>
+        <button id="next-button" class="next-button" onclick="loadNextQuestion()">Next Question</button>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "What programming language is used for Telegram bot development?", options: ["Python", "HTML", "CSS", "PHP"], answer: "Python" },
+            { question: "Which tag is used to create a hyperlink in HTML?", options: ["<a>", "<div>", "<link>", "<button>"], answer: "<a>" },
+            { question: "What is the main purpose of AIML?", options: ["Artificial Intelligence Markup Language", "Application Interface Markup Language", "Audio Input Markup Language", "None of the above"], answer: "Artificial Intelligence Markup Language" },
+            { question: "Which of the following is not a JavaScript framework?", options: ["React", "Django", "Vue.js", "Angular"], answer: "Django" },
+            { question: "What is the file extension for Python files?", options: [".py", ".js", ".html", ".css"], answer: ".py" },
+            { question: "Which CSS property is used to change the text color?", options: ["color", "font-size", "background-color", "text-align"], answer: "color" },
+            { question: "Which command is used to initialize a Git repository?", options: ["git init", "git start", "git create", "git make"], answer: "git init" },
+            { question: "Which language is used for styling web pages?", options: ["HTML", "CSS", "JavaScript", "Python"], answer: "CSS" },
+            { question: "What does SQL stand for?", options: ["Structured Query Language", "Simple Query Language", "Standard Query Language", "Standard Question Language"], answer: "Structured Query Language" },
+            { question: "Which JavaScript method is used to write HTML content into the webpage?", options: ["document.write()", "document.display()", "document.render()", "document.create()"], answer: "document.write()" },
+
+            { question: "What keyword is used to define a function in Python?", options: ["def", "function", "func", "define"], answer: "def" },
+            { question: "Which data type is mutable in Python?", options: ["list", "tuple", "string", "int"], answer: "list" },
+            { question: "What is the correct syntax to import a module in Python?", options: ["import module_name", "include module_name", "require module_name", "using module_name"], answer: "import module_name" },
+            { question: "How do you add an element to a list in Python?", options: ["list.append()", "list.add()", "list.push()", "list.insert()"], answer: "list.append()" },
+            { question: "What does the len() function do in Python?", options: ["Returns the length of an object", "Converts to a string", "Creates a list", "Removes an element"], answer: "Returns the length of an object" },
+            { question: "Which keyword is used for error handling in Python?", options: ["try-except", "catch", "error", "handle"], answer: "try-except" },
+            { question: "What is a lambda function in Python?", options: ["An anonymous function defined using the lambda keyword", "A built-in function", "A type of loop", "An error handler"], answer: "An anonymous function defined using the lambda keyword" },
+            { question: "How can you make a Python script wait for a few seconds?", options: ["time.sleep(seconds)", "wait(seconds)", "pause(seconds)", "delay(seconds)"], answer: "time.sleep(seconds)" },
+            { question: "What is the result of 5 // 2 in Python?", options: ["2", "2.5", "3", "5"], answer: "2" },
+            { question: "How do you define a class in Python?", options: ["class ClassName:", "define ClassName:", "create ClassName:", "function ClassName:"], answer: "class ClassName:" },
+
+            { question: "What tag is used to create a hyperlink in HTML?", options: ["<a>", "<link>", "<href>", "<url>"], answer: "<a>" },
+            { question: "How do you specify an image source in HTML?", options: ["<img src='image_url' />", "<image src='image_url' />", "<picture src='image_url' />", "<photo src='image_url' />"], answer: "<img src='image_url' />" },
+            { question: "Which HTML element is used to define a table row?", options: ["<tr>", "<row>", "<table>", "<td>"], answer: "<tr>" },
+            { question: "What is the purpose of the <title> tag in HTML?", options: ["Defines the title of the webpage", "Creates a header", "Adds a footer", "Defines a section"], answer: "Defines the title of the webpage" },
+            { question: "What tag is used to create a numbered list in HTML?", options: ["<ol>", "<ul>", "<list>", "<numbered>"], answer: "<ol>" },
+            { question: "What tag is used for creating a dropdown list in HTML?", options: ["<select>", "<dropdown>", "<list>", "<menu>"], answer: "<select>" },
+            { question: "Which HTML attribute is used to specify inline CSS styles?", options: ["style", "css", "class", "id"], answer: "style" },
+           { question: "What does the <meta charset='UTF-8'> tag do in HTML?", options: ["Sets the character encoding for the document", "Adds a meta description", "Specifies the author of the document", "Defines the viewport"], answer: "Sets the character encoding for the document" },
+            { question: "Which tag is used to create a form in HTML?", options: ["<form>", "<input>", "<button>", "<field>"], answer: "<form>" },
+            { question: "What is the purpose of the <footer> tag in HTML?", options: ["Defines a footer for a document or section", "Creates a header", "Adds a sidebar", "Defines a navigation link"], answer: "Defines a footer for a document or section" },
+
+            { question: "Which CSS property is used to change the background color?", options: ["background-color", "color", "bgcolor", "background"], answer: "background-color" },
+            { question: "What does the CSS 'display' property control?", options: ["The display style of an element", "The position of an element", "The background color of an element", "The font size of an element"], answer: "The display style of an element" },
+            { question: "Which CSS property is used to control the text size?", options: ["font-size", "text-size", "size", "text-style"], answer: "font-size" },
+            { question: "What is the default value of the 'position' property in CSS?", options: ["static", "relative", "absolute", "fixed"], answer: "static" },
+            { question: "Which CSS pseudo-class is used to select elements when the user hovers over them?", options: [":hover", ":focus", ":active", ":visited"], answer: ":hover" },
+            { question: "What does the CSS 'border-radius' property do?", options: ["Rounds the corners of an element", "Changes the border color", "Adds a border to an element", "Defines the border style"], answer: "Rounds the corners of an element" },
+            { question: "Which CSS property is used to set the space between the text and the border of an element?", options: ["padding", "margin", "border-spacing", "line-height"], answer: "padding" },
+            { question: "What is the purpose of the 'z-index' property in CSS?", options: ["Controls the stacking order of elements", "Defines the width of the border", "Sets the font weight", "Adjusts the text alignment"], answer: "Controls the stacking order of elements" },
+            { question: "Which CSS property is used to hide an element from the page?", options: ["display: none;", "visibility: hidden;", "opacity: 0;", "position: absolute;"], answer: "display: none;" },
+            { question: "What is the purpose of media queries in CSS?", options: ["To apply styles based on the device's screen size", "To define animations", "To create transitions", "To style pseudo-elements"], answer: "To apply styles based on the device's screen size" }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timer;
+        const maxTime = 20; // 20 seconds
+        let timeLeft = maxTime;
+
+        function loadQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('question').textContent = question.question;
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            question.options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.className = 'option-button';
+                button.onclick = () => checkAnswer(option);
+                optionsDiv.appendChild(button);
+            });
+            document.getElementById('next-button').style.display = 'none';
+            startTimer();
+        }
+
+        function checkAnswer(selectedOption) {
+            const correctAnswer = questions[currentQuestionIndex].answer;
+            if (selectedOption === correctAnswer) {
+                document.getElementById('animation').style.display = 'block';
+                document.getElementById('wrong-animation').style.display = 'none';
+                score++;
+                document.getElementById('score').textContent = score;
+            } else {
+                document.getElementById('animation').style.display = 'none';
+                document.getElementById('wrong-animation').style.display = 'block';
+            }
+            document.getElementById('next-button').style.display = 'block';
+            clearInterval(timer);
+        }
+
+        function loadNextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                document.getElementById('question').textContent = 'Quiz Completed!';
+                document.getElementById('options').innerHTML = '';
+                document.getElementById('next-button').style.display = 'none';
+                document.getElementById('timer').style.display = 'none';
+            }
+        }
+
+        function startTimer() {
+            timeLeft = maxTime;
+            document.getElementById('timer').textContent = `Time: ${timeLeft}`;
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = `Time: ${timeLeft}`;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('next-button').style.display = 'block';
+                    document.getElementById('animation').style.display = 'none';
+                    document.getElementById('wrong-animation').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        window.onload = () => {
+            loadQuestion();
+        };
+    </script>
+</body>
+  </html>
