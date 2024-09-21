@@ -1,0 +1,19 @@
+npm init -y
+npm install express body-parser moment
+{
+  "name": "mrzbots-token-system",
+  "version": "1.0.0",
+  "description": "Token management and expiration system with web access.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.19.0",
+    "moment": "^2.29.4"
+  },
+  "keywords": [],
+  "author": "CoolTech",
+  "license": "ISC"
+}
